@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MVC_ADOCRUD.Models.Property>
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2 {
+        color: white;
+        text-align: center;
+    }
+</style>
+<h2>Registration</h2>
+
+<div class="container">
+    <table class="table  table-sm  table-dark text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Paper_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject_Name)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paper_Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject_Name)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

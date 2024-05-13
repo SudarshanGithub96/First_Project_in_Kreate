@@ -1,0 +1,501 @@
+﻿@*@model IEnumerable<MVC_ADOCRUD.Models.Property>*@
+@model MVC_ADOCRUD.Models.Property
+@{
+    ViewBag.Title = "Get_Employee_List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table-sm {
+        border: 2px solid black;
+        text-align: center;
+        min-width: max-content;
+        background-color: black;
+        color: white !important;
+    }
+
+    th {
+        position: sticky;
+        top: 0px;
+        background-color: teal !important;
+    }
+
+    .table-wrapper {
+        max-height: 600px;
+        overflow-y: scroll;
+        margin: auto;
+    }
+
+    th, td {
+        /*border: 1px solid black !important;*/
+    }
+
+    h2 {
+        color: gold;
+    }
+
+    .table-wrapper {
+        border: 2px solid black;
+        box-shadow: 0px 0px 3px black;
+        margin: 20px;
+        border-radius: 5px;
+    }
+
+    .modal-body {
+        background-color: #07182d;
+        color: white;
+    }
+
+    .modal-header {
+        background-color: #07182d;
+    }
+
+    .modal-footer {
+        background-color: #07182d !important;
+    }
+</style>
+
+
+
+
+<h2 class="text-center">Get_Employee_List</h2>
+<p>
+    <button class="btn btn-primary" id="AddbtnEmployee">Add New Employee</button>
+</p>
+
+
+
+@*--------------------------Table-------------------------------*@
+<div class="container-fluid">
+    <div class="outer-wrapper">
+        <div class="table-wrapper">
+            <table class="table table-sm">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Employee_ID)</th>
+                    <th>@Html.DisplayNameFor(model => model.First_Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Last_Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Username)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.Password)</th>
+                    <th>@Html.DisplayNameFor(model => model.ConfirmPassword)</th>
+                    <th>@Html.DisplayNameFor(model => model.Mobile)</th>
+                    <th>@Html.DisplayNameFor(model => model.Country_Id)</th>
+                    <th>@Html.DisplayNameFor(model => model.State_Id)</th>
+                    <th>@Html.DisplayNameFor(model => model.City_Id)</th>
+                    <th>Options</th>
+                </tr>
+                <tbody id="table_data"> </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*--------------------------Popup Modal-------------------------*@
+<div class="modal fade modal" id="Employee_Model_Id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            @*header part of the model*@
+            <div class="modal-header">
+                <h2 class="text-info modal-title">Add Employee</h2>
+                <!--  Close button first in header-->
+                <button class="close text-danger" id="close_Id1" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            @*Body part of the model*@
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label">First Name</label>*@
+                                @*<input type="text" placeholder="First Name" class="form-control" id="First_Name" />*@
+                                @Html.EditorFor(model => model.First_Name, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "First Name" } })
+                                @Html.ValidationMessageFor(model => model.First_Name, null, new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label ">Last Name</label>*@
+                                @*<input type="text" placeholder="Last Name" class="form-control" id="Last_Name" />*@
+                                @Html.EditorFor(model => model.Last_Name, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "Last Name" } })
+                                @Html.ValidationMessageFor(model => model.Last_Name, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">User Name</label>*@
+                                @*<input type="text" placeholder="User Name" class="form-control" id="User_Name" />*@
+                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "User Name" } })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">Email</label>*@
+                                @*<input type="text" placeholder="Email" class="form-control" id="Email" />*@
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "Email" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">Password</label>*@
+                                @*<input type="text" placeholder="Password" class="form-control" id="Password" />*@
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "Password" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">Confirm Password</label>*@
+                                @*<input type="text" placeholder="Confirm Password" class="form-control" id="Confirm_Password" />*@
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "Confirm Password" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">Mobile</label>*@
+                                @*<input type="text" placeholder="Mobile" class="form-control" id="Mobile" />*@
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control d-grid  col-md-1", PlaceHolder = "Mobile" } })
+                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">Country</label>*@
+                                @*<input type="text" placeholder="City" class="form-control" id="City" />*@
+                                @Html.DropDownListFor(model => model.Country_Id, new SelectList(ViewBag.CountryList, "Country_Id", "Country_Name"), "--Select the Country --", new { @class = "form-control d-grid gap-2 col-5 mx-auto" })
+                                @Html.ValidationMessageFor(model => model.Country_Id, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">State</label>*@
+                                @*<input type="text" placeholder="State" class="form-control" id="State" />*@
+                                @Html.DropDownListFor(model => model.State_Id, new SelectList(Enumerable.Empty<SelectList>(), "State_Id", "State_Name"), "--Select the State--", new { @class = "form-control d-grid gap-2 col-5 mx-auto" })
+                                @Html.ValidationMessageFor(model => model.State_Id, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @*<label class="col-md-5 control-label no-padding-right">City</label>*@
+                                @*<input type="text" placeholder="Country" class="form-control" id="Country" />*@
+                                @Html.DropDownListFor(model => model.City_Id, new SelectList(Enumerable.Empty<SelectList>(), "City_Id", "City_Name"), "--Select the City--", new { @class = "form-control d-grid gap-2 col-5 mx-auto" })
+                                @Html.ValidationMessageFor(model => model.City_Id, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*Footer part of the model*@
+            <div class="modal-footer">
+                @*<input type="button" id="btnSubmit" value="Submit" class="btn btn-primary" />*@
+
+                <input type="button" onclick=" AddEmployee();" id="btnSubmit" value="Submit" class="btn btn-primary" />
+                <button class="btn btn-danger" id="close_Id2" data-dismiss="modal">Close</button>  <!--  Close button second in footer-->
+                @Html.ActionLink("Login", "Login", "Home", new { @class = "d-grid gap-2  btn btn-primary" })
+                @*<button class="btn btn-danger" onclick="CloseModalPopup();" id="close_Id3" data-dismiss="modal">Close</button>*@   <!--  Close button third in footer-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@*-----------------------showing employee list---------------------*@
+
+<script>
+    $(document).ready(function () {
+        ShowEmployeeData();
+    });
+</script>
+
+<script>
+    function ShowEmployeeData() {
+        /*debugger;*/
+        $.ajax({
+            url: '/Home/Get_Employee_Json',
+            type: 'Get',
+            datatype: 'json',
+            contentType: 'application/json;charset=utf-8;',
+            success: function (result, status, xhr) {
+                var object = '';
+                $.each(result, function (index, item) {
+                    object += '<tr>';
+                    object += '<td>' + item.Employee_ID + '</td>';
+                    object += '<td>' + item.First_Name + '</td>';
+                    object += '<td>' + item.Last_Name + '</td>';
+                    object += '<td>' + item.Username + '</td>';
+                    object += '<td>' + item.Email + '</td>';
+                    object += '<td>' + item.Password + '</td>';
+                    object += '<td>' + item.ConfirmPassword + '</td>';
+                    object += '<td>' + item.Mobile + '</td>';
+                    object += '<td>' + item.Country_Id + '</td>';
+                    object += '<td>' + item.State_Id + '</td>';
+                    object += '<td>' + item.City_Id + '</td>';
+                    object += '<td> <a href="#" class="btn btn-primary "  onclick="Edit(' + item.Employee_ID + ')">Edit</a>   <a href="#" class="btn btn-danger" onclick="Delete(' + item.Employee_ID + ')">Delete</a> </td>';
+                    object += '<tr>';
+                });
+                $('#table_data').html(object);
+            },
+            error: function () {
+                alert('did not get the data');
+            }
+        });
+    };
+</script>
+
+
+@*jquery of bind state and city*@
+<script>
+    $(document).ready(function () {
+        $("#Country_Id").change(function () {
+            var countryId = $("#Country_Id").val();
+            $.ajax({
+                url: '@Url.Action("BindState")',
+                ContentType: "application/json",
+                type: 'GET',
+                dataType: 'json',
+                data: { country_id: countryId },
+                success: function (ctry) {
+
+                    var ddlState = $('#State_Id');
+                    if (ctry == "") {
+                        alert(ctry)
+        }
+        ddlState.empty().append('<option selected="selected" value="0">Select State</option>');
+        $.each(ctry, function (i, ctry) {
+            ddlState.append($("<option></option>").val(this['State_Id']).html(this['State_Name']));
+        });
+
+    }
+});
+
+        });
+
+
+
+
+        $("#State_Id").change(function () {
+            var StateId = $("#State_Id").val();
+
+            if (StateId == "") {
+                StateId = 0;
+        }
+        $.ajax({
+            url: '@Url.Action("BindCity")',
+            type: 'GET',
+            dataType: 'json',
+            data: { state_id: StateId },
+            success: function (StateId) {
+
+                var ddlCity = $('#City_Id');
+                if (StateId == "") {
+                    alert(StateId)
+                }
+                ddlCity.empty().append(' <option selected = "selected" value = "0">Select City</option>');
+                $.each(StateId, function (i, StateId) {
+                    ddlCity.append($("<option> </option>").val(this['City_Id']).html(this['City_Name']));
+                });
+            }
+
+        });
+
+    });
+
+    });
+
+</script>
+
+@*---------------------Show modal---------------------------------------*@
+<script>
+    $('#AddbtnEmployee').click(function () {
+        /*debugger;*/
+        $('#Employee_Model_Id').modal('show');
+    });
+</script>
+
+@*--------------------close button 1 in header--------------------------*@
+<script>
+    $('#close_Id1').click(function () {
+        //alert('ok');
+        $("#Employee_Model_Id").modal('hide');
+    });
+</script>
+
+@*--------------------close button 2 in footer--------------------------*@
+<script>
+    $('#close_Id2').click(function () {
+        //alert('ok');
+        $("#Employee_Model_Id").modal('hide');
+    });
+</script>
+
+
+@*-----------------add employee using ajax method 2---------------*@
+<script>
+    //Function of inserting the data
+    function AddEmployee() {
+
+        var savedata = {
+            First_Name: $("#First_Name").val(),
+            Last_Name: $("#Last_Name").val(),
+            Username: $("#Username").val(),
+            Email: $("#Email").val(),
+            Password: $("#Password").val(),
+            ConfirmPassword: $("#ConfirmPassword").val(),
+            Mobile: $("#Mobile").val(),
+            CountryId: $("#Country_Id").val(),
+            State_Id: $("#State_Id").val(),
+            City_Id: $("#City_Id").val()
+        }
+        $.ajax(
+            {
+                type: "POST",
+                url: "/Home/Insert_Employee_Json",
+                data: savedata,
+                success: function () {
+                    alert("Data has been saved successfully");
+                    ClearTextBox();
+                    ShowEmployeeData();
+                    HideModelPopup();
+                },
+                //error: function () {
+                //    alert("Please fill all the Fields");
+                //}
+            }
+        );
+
+    };
+
+    //Function of Clear Text Box after inserting the data
+    function ClearTextBox() {
+        $("#First_Name").val('');
+        $("#Last_Name").val('');
+        $("#Username").val('');
+        $("#Email").val('');
+        $("#Password").val('');
+        $("#ConfirmPassword").val('');
+        $("#Mobile").val('');
+        $("#Country_Id").val('');
+        $("#State_Id").val('');
+        $("#City_Id").val('');
+    };
+
+    //Function of Hide Modal after inserting the data
+    function HideModelPopup() {
+        $("#Employee_Model_Id").modal('hide');
+    };
+
+
+    //Function of delete the record
+    function Delete(id) {
+
+        if (confirm('Are you sure, you want to delete this record ?')) {
+            $.ajax(
+                {
+                    url: '/Home/Delete_Employee_Json?id=' + id,
+                    success: function () {
+                        alert('Record Deleted');
+                        ShowEmployeeData();
+                    },
+                    error: function () {
+                        alert('Record not Deleted');
+                    }
+                }
+            );
+        }
+    };
+
+</script>
+
+
+@*//validation function *@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            validationForm();
+        });
+
+    });
+    //validation function
+    function validationForm() {
+        if ($("#First_Name").val() == "") {
+            alert('First name should not be empty');
+            return false;
+        }
+        if ($("#Last_Name").val() == "") {
+            alert('Last name should not be empty');
+            return false;
+        }
+        if ($("#Username").val() == "") {
+            alert('User name should not be empty');
+            return false;
+        }
+        if ($("#Email").val() == "") {
+            alert('Email should not be empty');
+            return false;
+        }
+        if ($("#Password").val() == "") {
+            alert('Password should not be empty');
+            return false;
+        }
+        if ($("#ConfirmPassword").val() == "") {
+            alert('Confirm_Password should not be empty');
+            return false;
+        }
+        if ($("#Mobile").val() == "") {
+            alert('Mobile should not be empty');
+            return false;
+        }
+        if ($("#Country_Id").val() == "") {
+            alert('Country should not be empty');
+            return false;
+        }
+        if ($("#Country_Id").val() == "") {
+            alert('Country should not be empty');
+            return false;
+        }
+        if ($("#State_Id").val() == "") {
+            alert('State should not be empty');
+            return false;
+        }
+        if ($("#City_Id").val() == "") {
+            alert('City should not be empty');
+            return false;
+        }
+    }
+</script>
+
+

@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h3 {
+        color: gold;
+    }
+</style>
+<style>
+    .mynav_dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        z-index: 1;
+    }
+
+        .mynav_dropdown-content a {
+            float: none;
+            color: black;
+            background-color: antiquewhite;
+            padding: 12px 16px;
+            display: block;
+            text-align: left;
+        }
+
+            .mynav_dropdown-content a:hover {
+                background-color: #006a4e;
+                color: white;
+            }
+
+    .mynav_dropdown:hover .mynav_dropdown-content {
+        display: block;
+    }
+
+    .dropdown1 {
+        color: aliceblue;
+    }
+</style>
+
+<h3>Dashboard </h3>
+
+<p style="color: white; font-size:15px">
+    @{ if (Session["Login_Session"] != null)
+        {
+            @Html.Raw(Session["Login_Session"])
+        }
+    }
+</p>
+
+
+<div class="container">
+    @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "btn btn-dark text-light" })
+    @Html.ActionLink("Student Login", "StudentLogin", "Home", new { area = "" }, new { @class = "btn btn-dark test-light" })
+
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Student
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Add Student", "Insert", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Student List", "GetEmployeeList", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Student List", "Get_Employee_List", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        </ol>
+    </li>
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Exam
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Add Exam", "Exam", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Exam List", "ExamList", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        </ol>
+    </li>
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Paper
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Paper", "Paper", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Paper List", "GetPaperList", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        </ol>
+    </li>
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Slot
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Slot", "Slot", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Slot List", "GetSlotList", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        </ol>
+    </li>
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Exam Notification
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Exam Notification1", "Exam_Notification1", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Exam Notification List", "Get_Exam_Notification_List_For_View", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+        </ol>
+    </li>
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Center
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Center", "Center", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Center List", "GetCenterList", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        </ol>
+    </li>
+    <li class="nav-item mynav_dropdown">
+        <a class="mynav_dropbtn dropdown1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Exam Group
+        </a>
+        <ol class="mynav_dropdown-content">
+            <li>@Html.ActionLink("Exam Group", "Examination_Group", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink("Exam Group List", "Get_Exam_Geoup_List", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        </ol>
+    </li>
+</div>

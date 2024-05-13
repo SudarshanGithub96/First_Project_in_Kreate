@@ -1,0 +1,73 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+<style>
+    tr {
+        color: white;
+    }
+</style>
+
+
+@{
+    var Start_Date = TempData["Examination_Start_Date1"] as DateTime?;
+    var End_Date = TempData["Examination_End_Date1"] as DateTime?;
+}
+
+<h4>Schedule Partial</h4>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <table class="table table-active text-bg-dark">
+            <tr>
+                <th>
+                    <label>Exam Date</label>
+                </th>
+                <th>
+                    <label>Slot 1</label>
+                </th>
+                <th>
+                    <label>Slot 2</label>
+                </th>
+                <th></th>
+            </tr>
+             
+            @if (Start_Date != null && End_Date != null)
+            {
+                for (DateTime date = Start_Date.Value; date <= End_Date.Value; date = date.AddDays(1))
+                {
+                    <tr>
+                        <td>
+                            @date.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Examination_Group_Id, new SelectList(ViewBag.groupdata, "Examination_Group_Id", "Exam_Group"), "--Select the Group --", new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Examination_Group_Id, new SelectList(ViewBag.groupdata, "Examination_Group_Id", "Exam_Group"), "--Select the Group --", new { @class = "form-control" })
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#Examination_Group_Id").chosen();
+    });
+
+</script>
+

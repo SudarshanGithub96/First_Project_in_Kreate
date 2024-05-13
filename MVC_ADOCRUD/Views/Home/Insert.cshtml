@@ -1,0 +1,248 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+@{
+    ViewBag.Title = "Insert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid col-md-7 mx-auto" style="box-shadow: 0px 2px 29px 1px rgba(0,0,0,75); -webkit-box-shadow: 0px 2px 29px 1px rgba(0,0,0,75); -moz-box-shadow: 0px 2px 29px 1px rgba(0,0,0,75); background-color: #07182d; ">
+        <div class="form-horizontal">
+
+            <br />
+            <div class="col-md-12">
+                <div class="jumbrotron text-center text-white" style="font-family:'Verdana'">
+                    <h2>Sign Up Page</h2>
+                </div>
+            </div>
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.First_Name, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "First Name" } })
+                        @Html.ValidationMessageFor(model => model.First_Name, "", new { @class = "text-danger  d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Last_Name, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "Last Name" } })
+                        @Html.ValidationMessageFor(model => model.Last_Name, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "Username" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "Password" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "Repeat your Password" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control d-grid gap-2 col-5 mx-auto", PlaceHolder = "Mobile" } })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.Country_Id, new SelectList(ViewBag.CountryList, "Country_Id", "Country_Name"), "--Select the Country --", new { @class = "form-control d-grid gap-2 col-5 mx-auto" })
+                        @Html.ValidationMessageFor(model => model.Country_Id, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.State_Id, new SelectList(Enumerable.Empty<SelectList>(), "State_Id", "State_Name"), "--Select the State--", new { @class = "form-control d-grid gap-2 col-5 mx-auto" })
+                        @Html.ValidationMessageFor(model => model.State_Id, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.City_Id, new SelectList(Enumerable.Empty<SelectList>(), "City_Id", "City_Name"), "--Select the City--", new { @class = "form-control d-grid gap-2 col-5 mx-auto" })
+                        @Html.ValidationMessageFor(model => model.City_Id, "", new { @class = "text-danger d-grid gap-2 col-6 mx-auto" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!--<div class="form-group">-->
+            @*@Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <!--<div class="col-md-10">-->
+            @*@Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Country" } })*@
+            @*@Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })-- >*@
+            <!--</div>
+            </div>-->
+            <!--<div class="form-group">-->
+            @*@Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <!--<div class="col-md-10">-->
+            @*@Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "State" } })*@
+            @*@Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })*@
+            <!--</div>
+            </div>-->
+            <br />
+
+            <!--<div class="form-group">-->
+            @*@Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <!--<div class="col-md-10">-->
+            @*@Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "City" } })*@
+            @*@Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })*@
+            <!--</div>
+            </div>-->
+
+
+            <br />
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Register" class="d-grid gap-2 col-4 mx-auto btn btn-outline-primary" />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                @Html.ActionLink("Reset", "Insert", "Home", new { @class = "d-grid gap-2 col-4 mx-auto btn btn-outline-warning" })
+            </div>
+
+
+            <br />
+            <div>
+                @Html.ActionLink("Get Employee List", "GetEmployeeList", "Home", new { @class = "d-grid gap-2 col-4 mx-auto btn btn-outline-success" })
+            </div>
+            <br />
+
+            <div>
+                @Html.ActionLink("Login", "Login", "Home", new { @class = "d-grid gap-2 col-4 mx-auto btn btn-outline-primary" })
+            </div>
+            <br />
+
+        </div>
+        <br />
+    </div>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+<!--      Java script Alert Popup Message-->
+@if (!string.IsNullOrEmpty(ViewBag.DataInsert))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.DataInsert");
+        window.location.href = 'GetEmployeeList';
+    </script>
+}
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Country_Id").change(function () {
+            var countryId = $("#Country_Id").val();
+            $.ajax({
+                url: '@Url.Action("BindState")', 
+                ContentType: "application/json",
+                type: 'GET',
+                dataType: 'json',
+                data: { country_id: countryId },
+                success: function (ctry) {
+
+                    var ddlState = $('#State_Id');
+                    if (ctry == "") {
+                        alert(ctry)
+        }
+        ddlState.empty().append('<option selected="selected" value="0">Select State</option>');
+        $.each(ctry, function (i, ctry) {
+            ddlState.append($("<option></option>").val(this['State_Id']).html(this['State_Name']));
+        });
+
+    }
+});
+
+        });
+
+
+
+
+        $("#State_Id").change(function () {
+            var StateId = $("#State_Id").val();
+
+            if (StateId == "") {
+                StateId = 0;
+        }
+        $.ajax({
+            url: '@Url.Action("BindCity")',
+            type: 'GET',
+            dataType: 'json',
+            data: { state_id: StateId },
+            success: function (StateId) {
+                
+                var ddlCity = $('#City_Id');
+                if (StateId == "") {
+                    alert(StateId)
+                }
+                ddlCity.empty().append(' <option selected = "selected" value = "0">Select City</option>');
+                $.each(StateId, function (i, StateId) {
+                    ddlCity.append($("<option> </option>").val(this['City_Id']).html(this['City_Name']));
+                });
+            }
+
+        });
+
+    });
+
+    });
+
+</script>
+
+

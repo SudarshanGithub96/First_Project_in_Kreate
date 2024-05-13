@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MVC_ADOCRUD.Models.Property>
+
+@{
+    ViewBag.Title = "GetSlotList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table, h2 {
+        color: wheat;
+    }
+</style>
+
+<div class="container-fluid">
+    <h2>GetSlotList</h2>
+
+    <p>
+        @Html.ActionLink("Create New Slot", "Slot", "Home", new { @class = "d-grid col-md-2 btn btn-outline-light" })
+    </p>
+    <table class="table table-bordered table-active tabl table-hover  table-responsive table-striped   table-sm text-center table-dark text-white ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Exam_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot_Start_time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot_End_time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot_Day)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot_Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exam_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot_Start_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot_End_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot_Day)
+                </td>
+                <td>
+                    <div class="d-flex gap-2">
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Slot_Id }, new { @class = "d-grid mx-auto btn btn-light" })*@
+                        @Html.ActionLink("Delete", "SlotDelete", new { id = item.Slot_Id }, new { @class = "d-grid mx-auto btn btn-danger", onclick = "return confirm('Do you want to delete this record');" })
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

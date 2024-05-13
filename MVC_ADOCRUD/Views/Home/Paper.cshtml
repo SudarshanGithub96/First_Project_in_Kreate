@@ -1,0 +1,96 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+@{
+    ViewBag.Title = "Paper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2 {
+        color: gold;
+    }
+</style>
+<h2>Paper</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exam, htmlAttributes: new { @class = "control-label col-md-2 text-light" })
+            <div>
+                @Html.DropDownListFor(model => model.Exam, ViewBag.EXAMLIST as SelectList,"--Select the Exam--", new { @class = "form-control", id = "normaldropdown" })
+                @Html.ValidationMessageFor(model => model.Exam, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject_Name, htmlAttributes: new { @class = "control-label col-md-2 text-light" })
+            <div>
+                @Html.EditorFor(model => model.Subject_Name, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Subject Name" } })
+                @Html.ValidationMessageFor(model => model.Subject_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Min_Marks, htmlAttributes: new { @class = "control-label col-md-2 text-light" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Min_Marks, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Minimum Marks" } })
+                @Html.ValidationMessageFor(model => model.Min_Marks, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Max_Marks, htmlAttributes: new { @class = "control-label col-md-2 text-light" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Max_Marks, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Maximum Marks" } })
+                @Html.ValidationMessageFor(model => model.Max_Marks, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Add Paper" class="btn btn-primary" />
+                @Html.ActionLink("Paper List", "GetPaperList", "Home", new { @class = "btn btn-success" })
+                <br />
+            </div>
+
+        </div>
+        <br />
+    </div>
+}
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+<!--      Java script Alert Popup Message-->
+@if (!string.IsNullOrEmpty(ViewBag.PaperInsert))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.PaperInsert");
+        window.location.href = 'GetPaperList';
+    </script>
+}
+<link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+<script src="~/Scripts/chosen.jquery.js"></script>
+<script src="~/Scripts/chosen.jquery.min.js"></script>
+
+<script>
+    $(function () {
+        $("#normaldropdown").chosen();
+    });
+</script>

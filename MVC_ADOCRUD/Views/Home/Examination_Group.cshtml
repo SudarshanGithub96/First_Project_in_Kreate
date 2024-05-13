@@ -1,0 +1,313 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+@{
+    ViewBag.Title = "Examination_Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2 {
+        color: gold;
+    }
+
+    .control-label {
+        color: wheat;
+    }
+
+    #wrap {
+        width: 30%;
+    }
+
+    .field_box_class {
+        float: left;
+        width: 50%;
+    }
+
+    .my_box {
+        padding-bottom: 20px;
+    }
+</style>
+
+
+<h2>Examination_Group</h2>
+
+
+@using (Html.BeginForm("Examination_Group", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exam, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Exam_Id, new SelectList(ViewBag.EXAMLIST, "Exam_Id", "Exam_Name"), "--Select the Exam --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Exam_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slot_Paper_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Paper_Id, new SelectList(Enumerable.Empty<SelectList>(), "Paper_Id", "Subject_Name"), "--Select the Subject--", new { @class = "form-control d-grid gap-2 col-5" })
+                @Html.ValidationMessageFor(model => model.Paper_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+      
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exam_Group, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="textBoxContainer">
+                    @Html.EditorFor(model => model.Exam_Group, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <button id="addTextBox" type="button">+</button>
+                <button id="removeTextBox" type="button">-</button>
+                @Html.ValidationMessageFor(model => model.Exam_Group, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+
+        <br />
+
+        @*Save data button*@
+        <!--<br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="saveData" type="button" class="btn btn-primary">Save Data</button>-->
+        @*<input id="addgroupexam" type="submit" value="Add" class="col-md-2 btn btn-success">*@
+        <!--</div>
+        </div>-->
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="saveData" type="button" class="btn btn-primary">Save Data</button>
+                @Html.ActionLink("Exam Group List", "Get_Exam_Geoup_List", "Home", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+
+
+<br />
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+@*bind paper*@
+<script>
+    $(document).ready(function () {
+       /* debugger;*/
+        $("#Exam_Id").change(function () {
+            //debugger;
+            var examId = $("#Exam_Id").val();
+            $.ajax({
+                url: '@Url.Action("BindPaper")',
+                ContentType: "application/json",
+                type: 'GET',
+                dataType: 'json',
+                data: { exam_id: examId },
+                success: function (ctry) {
+
+                    var ddlPaper = $('#Paper_Id');
+                    if (ctry == "") {
+                        alert(ctry)
+                    }
+                    ddlPaper.empty().append('<option selected="selected" value="0">Select Subject</option>');
+                    $.each(ctry, function (i, ctry) {
+                        ddlPaper.append($("<option></option>").val(this['Paper_Id']).html(this['Subject_Name']));
+                    });
+
+                }
+            });
+
+        });
+    });
+</script>
+
+
+
+@*Exam-Group Append and Remove text box*@
+<!--<script>
+    function add_more() {
+        var box_count = jQuery("#box_count").val();
+        box_count++;
+        jQuery("#box_count").val(box_count);
+        jQuery("#wrap").append('<div class="my_box" id="box_loop_' + box_count + '"> <div class= "field_box_class"> <input type="text" name="Exam_Group" id="field_box_id" /> </div >  <div class="submit_btn_class">  <input type="button" name="submit" id="submit_btn_id" value="Remove" onclick=remove_more("' + box_count + '") /> </div> </div > ');
+    }
+
+
+    function remove_more(box_count) {
+        jQuery("#box_loop_" + box_count).remove();
+        var box_count = jQuery("#box_count").val();
+        box_count--;
+        jQuery("#box_count").val(box_count);
+    }
+
+</script>-->
+@*save json succesfull working of sudarshan*@
+@*<script>
+        $(document).ready(function () {
+            var counter = 1;
+
+            $("#addgroupexam").click(function () {
+                debugger;
+                var dataArray = [];
+
+                for (i = 1; i <= counter; i++) {
+                    var textboxValue = $("#Exam_Group").val();
+                    dataArray.push(textboxValue);
+                }
+
+                var get_exam_group_data = {
+                    Exam_Id: $("#Exam_Id").val(),
+                    Paper_Id: $("#Paper_Id").val(),
+                    Exam_Group: dataArray
+                }
+
+                $.ajax({
+                    url: '/Home/Insert_Examination_Group_Json',
+                    type: 'POST',
+                    ContentType: "application/json; charset=utf-8",
+                    data: get_exam_group_data,
+                    success: function () {
+                        alert("Data saved Successful")
+                    },
+                    failure: function () {
+                        alert("not working...");
+                    }
+                });
+            });
+        });
+    </script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*ritika content*@
+<script>
+    $(document).ready(function () {
+        $("#addTextBox").click(function () {
+            var newTextBox = $('<div class="added-textbox"><input type="text" name="Exam_Group" class="form-control" /></div>');
+            $("#textBoxContainer").append(newTextBox);
+        });
+
+        $("#removeTextBox").click(function () {
+            $(".added-textbox:last").remove();
+        });
+
+
+
+
+        //save data 
+        $("#saveData").click(function () {
+            debugger;
+            var paperGroups = [];
+            var isValid = true;
+
+            $("input[name='Exam_Group']").each(function () {
+                var value = $(this).val();
+                if (value === "") {
+                    isValid = false;
+                    return false;
+                }
+                paperGroups.push(value);
+
+
+            });
+
+            if (!isValid) {
+                alert("Please fill in all the Exam_Group textboxes.");
+                return;
+            }
+
+            var data = {
+                Exam_Id: $("#Exam_Id").val(),
+                Paper_Id: $("#Paper_Id").val(),
+                dynamicPaperGroups: paperGroups
+            };
+
+            $.ajax(
+                {
+                    url: "@Url.Action("Examination_Group_Json", "Home")",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        if (result.success) {
+                            alert(result.message);
+                            ClearTextBox();
+                            window.location.href = 'Get_Exam_Geoup_List';
+                        }
+                        else {
+                            alert(result.message);
+                            ClearTextBox();
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred during the Ajax request.");
+                    }
+                }
+            );
+        });
+    });
+</script>
+<script>
+    function ClearTextBox() {
+        $("#Exam_Id").val('');
+        $("#Paper_Id").val('');
+        $("#Exam_Group").val('');
+    };
+</script>
+
+

@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MVC_ADOCRUD</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        #footer {
+            background-color: #0C2340 !important;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: auto;
+        }
+
+        .navbar {
+            background-color: #fffae0 !important;
+        }
+        /*title of the website*/
+        /* .navbar-brand{
+            color:black !important;
+        }*/
+
+        .mynav_dropbtn {
+            color: black;
+        }
+
+        .mynav_dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+            .mynav_dropdown-content a {
+                float: none;
+                color: black;
+                background-color: antiquewhite;
+                padding: 12px 16px;
+                display: block;
+                text-align: left;
+            }
+
+                .mynav_dropdown-content a:hover {
+                    background-color: #006a4e;
+                    color: white;
+                }
+
+        .mynav_dropdown:hover .mynav_dropdown-content {
+            display: block;
+        }
+
+        /*search box*/
+        form.example input[type=text] {
+            padding: 7px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            width: 80%;
+            background: #f1f1f1;
+        }
+
+        form.example button {
+            float: left;
+            width: 18%;
+            padding: 19px;
+            background: #2196F3;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none;
+            cursor: pointer;
+        }
+
+            form.example button:hover {
+                background: #0b7dda;
+            }
+
+        form.example::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        h5 {
+            margin-top: 0px;
+            margin-bottom: 4px;
+            font-family: sans-serif;
+            font-size: 25px;
+            background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p2 {
+            margin-top: 0px;
+            margin-bottom: 10px;
+            font-family: sans-serif;
+            font-size: 1rem;
+            background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #pTollFreeNo, #pONORCno {
+            color: white;
+        }
+
+        .navbar-nav li {
+            padding: 0 2px;
+        }
+
+            .navbar-nav li a {
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        .topbar {
+            background-color: #006a4e;
+        }
+    </style>
+    <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+</head>
+
+@*---------------------------Body Section ----------------------------------*@
+
+<body id="checkme">
+    <!------Topbar Start------------>
+    <div class="nav_top_nav">
+        <div class="mobile_view tablet_view"></div>
+
+        <div class="container-fluid topbar">
+            <div class="container-fluid">
+                <div class="row align-items-center m-0">
+                    <div class="col">
+                        <ul class="d-flex topbar-left mb-0">
+                            <p class="px-1 mb-0 toll_freeno" id="pTollFreeNo">Toll Free Number : <b>1234</b></p>
+                            <p class="px-1 mb-0 toll_freeno" id="pONORCno">ONORC Toll Free Number : <b>65433</b></p>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------Topbar end----------->
+
+        <div style="background-color: #fffae0;">
+            <div class="container-fluid">
+                <div class="row align-items-center m-0 my-2">
+
+                    <!--------Main Logo Section Partial View Start----------->
+                    <div class="col-md-7 col-lg-7 col-sm-12 pl-0" id="DivMainHeaderLogo">
+                        <div class="logo-wrapper d-flex justify-content-start align-items-center">
+                            <div class="logo-text">
+                                <h4><p4>Government of Uttar Pradesh</p4></h4>
+                                <h5>Department of Examination</h5>
+                                <h6>Ministry of .Kreate Technologies</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!--------End----------->
+
+                    <div class="col-md-5 col-lg-5 col-sm-12">
+                        <div class="d-flex align-items-center justify-content-end res-earch-logo mobile_view_social_icon">
+                            <!------Header logo partial view start------------>
+                            <div id="HeaderLogo" class="header_logo">
+                                <div class="d-flex align-items-center m-0 right_header_logo">
+
+                                </div>
+                            </div>
+                            <!------Header logo partial view start------------>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        @*------------------------Header Section -------------------------------*@
+        <!--<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
+            <div class="container-fluid">-->
+                @*@Html.ActionLink("Government of India", "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-dark" })*@
+
+                @*----------------------Toggle Button-------------------------------*@
+                <!--<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav justify-content align-items-center">
+
+                        <li>-->@*@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link btn btn-dark text-light" })*@<!--</li>
+                        <li>-->@*@Html.ActionLink("Admin Login", "Login", "Home", new { area = "" }, new { @class = "nav-link btn btn-dark text-light" })*@<!--</li>-->
+                        @*<li style="color: black; font-size:15px">
+                            @{ if (Session["Login_Session"] != null)
+                                {
+                                    @Html.Raw(Session["Login_Session"])
+                                }
+                            }
+                        </li>*@
+                        <!--<li>-->@*@Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "nav-link btn btn-dark text-light" })*@<!--</li>
+                        <li>-->@*@Html.ActionLink("Student Login", "StudentLogin", "Home", new { area = "" }, new { @class = "nav-link btn btn-dark text-light" })*@<!--</li>
+
+                    </ul>
+                </div>
+                <div>
+                    <form class="example" action="" style="margin:auto;max-width:300px">
+                        <input type="text" placeholder="Search" name="search2">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>-->
+
+    @*------------------------rendered body---------------------------------*@
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <br />
+
+    <!----------------------------Footer Section----------------------------->
+    <div>
+        <footer id="footer" data-aos="fade-down" data-aos-easing="ease-in-out" data-aos-duration="400">
+            <div class="footer-newsletter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 text-white">
+                            <br />
+                            <h5>Our Newsletter</h5>
+                            <p>Your Entrepreneurial Dream Begins Here!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-4 footer-links text-white">
+                            <h4>Useful Links</h4>
+                            <ul>
+                                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Sign In", "Login", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Get List", "GetList", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-7 footer-links text-white ">
+                            <h4>Our Services</h4>
+                            <ul>
+                                <li>@Html.ActionLink("Web Design", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Web Development", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Product Management", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Marketing", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                                <li>@Html.ActionLink("Graphic Design", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                            </ul>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 footer-contact text-white">
+                            <h4>Contact Us</h4>
+                            <p>
+                                Vaishali, Ghaziabad, Uttar Pradesh<br>
+                                India
+                                <br>
+                                <strong>Phone:</strong> +91 9870123456<br>
+                                <strong>Email:</strong> .KreateGlobal@gmail.com<br>
+                            </p>
+                            <div class="social-links mt-3 text-white">
+                                <a href="Default.aspx" class="twitter"><i class="bx bxl-twitter"></i></a>
+                                <a href="Default.aspx" class="facebook"><i class="bx bxl-facebook"></i></a>
+                                <a href="Default.aspx" class="instagram"><i class="bx bxl-instagram"></i></a>
+                                <a href="Default.aspx" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 footer-info text-white">
+                            <h4>About</h4>
+                            <h4>Kreate Technologies</h4>
+                            <p2>Kreate Technologies is amongst the best software development companies in India with a robust team of proficient IT experts. </p2>
+                        </div>
+                    </div>
+                    <div class="copyright ">
+                        &copy; Copyright <strong><span>Kreate Technology</span></strong>. All Rights Reserved
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+
+            </div>
+            <br />
+        </footer>
+        <!-- End Footer -->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+
+</body>
+</html>

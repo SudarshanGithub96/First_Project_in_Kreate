@@ -1,0 +1,177 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+@{
+    ViewBag.Title = "Section";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2 {
+        color: gold;
+    }
+
+    #bcn {
+        color: white
+    }
+
+    thead {
+        color: white;
+    }
+</style>
+<h2>Section</h2>
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Subject_Name, htmlAttributes: new { @class = "control-label  text-light col-md-2" })
+        <div class="col-md-10">
+
+            @Html.DropDownListFor(model => model.Subject_Name, ViewBag.SUBJECTLIST as SelectList, "-- Select the Subject --", new { @id = "SubectName", @class = "form-control d-grid gap-2 col-5 " })
+            @Html.ValidationMessageFor(model => model.Subject_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+   
+    <div class="form-group">
+        @Html.LabelFor(model => model.Minimum_Marks, htmlAttributes: new { @class = "control-label text-light col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Minimum_Marks, new { htmlAttributes = new { @id = "MiniMarks", @class = "form-control", PlaceHolder = "Minimum Marks " } })
+            @Html.ValidationMessageFor(model => model.Minimum_Marks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+  
+    <div class="form-group">
+        @Html.LabelFor(model => model.Maximum_Marks, htmlAttributes: new { @class = "control-label text-light col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Maximum_Marks, new { htmlAttributes = new { @id = "MaxMarks", @class = "form-control", PlaceHolder = "Maximum Marks" } })
+            @Html.ValidationMessageFor(model => model.Maximum_Marks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+  
+    <div class="form-group">
+        @Html.LabelFor(model => model.Section_Name, htmlAttributes: new { @class = "control-label  text-light col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Section_Name, new { htmlAttributes = new { @id = "SectionName", @class = "form-control", PlaceHolder = "Section" } })
+            @Html.ValidationMessageFor(model => model.Section_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+   
+    <br />
+    <input id="AddBtnId" type="button" value="Add" class="col-2 btn btn-success">
+    <br />
+    <div class="form-group">
+        <div>
+            <br />
+            <div>
+                @Html.ActionLink("Section List", "SectionList", "Home", new { @class = "col-2  btn btn-success" })
+            </div>
+            <br />
+        </div>
+    </div>
+    <div>
+        <table id="gridlist" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Minimum Marks</th>
+                    <th>Maximum Marks</th>
+                    <th>Sections</th>
+                </tr>
+            </thead>
+            <tbody id="listdata">
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+@*jquery for append data*@
+<script>
+    $(document).ready(function () {
+        $("#AddBtnId").click(function () {
+            var SubjectName = $("#SubectName").val();
+            var MiniMarks = $("#MiniMarks").val();
+            var MaxMarks = $("#MaxMarks").val();
+            var SectionName = $("#SectionName").val();
+
+            var datastring = "<tr> <td>" + SubjectName + "</td> <td>" + MiniMarks + "</td> <td>" + MaxMarks + "</td> <td>" + SectionName + "</td> </tr>";
+            $("#listdata").append(datastring);
+
+        });
+    });
+</script>
+
+<!--   Sumbit button    -->
+<div>
+    <input id="btnAddSection" type="submit" value="Save" class="col-2 btn btn-success">
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnAddSection").click(function () {
+            var paperdata = [];
+            $("#listdata tr").each(function () {
+                var subjectname = $(this).find("td:eq(0)").text();
+                var Min = $(this).find("td:eq(1)").text();
+                var Max = $(this).find("td:eq(2)").text();
+                var Section = $(this).find("td:eq(3)").text();
+
+                paperdata.push({
+                    Subject_Name: subjectname,
+                    Minimum_Marks: parseInt(Min),
+                    Maximum_Marks: parseInt(Max),
+                    Section_Name: Section
+                });
+            });
+
+            //Calculate the sum of marks
+            var maxMarksSum = paperdata.reduce(function (sum, subjectname) {
+                return sum + subjectname.Max;
+            }, 0);
+
+            var Max_Marks = @Session["compare"];
+
+            if (maxMarksSum <= Maximum_Marks) {
+             
+                $.ajax({
+                    url: '/Home/Section_Json',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ data: paperdata }),
+                    success: function (result) {
+                        alert(maxMarksSum);
+                        alert(result.message);
+                    },
+                    error: function () {
+                        alert("An error occurred");
+                    }
+                });
+            }
+            else {
+                alert("Maximum_Marks is greater than maxMaxMarks");
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

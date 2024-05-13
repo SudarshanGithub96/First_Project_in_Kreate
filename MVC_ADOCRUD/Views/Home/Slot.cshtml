@@ -1,0 +1,134 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+@{
+    ViewBag.Title = "Slot";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .control-label, h2 {
+        color: white;
+    }
+
+    .checkbox-inline {
+        color: white;
+    }
+</style>
+
+<h2>Slot</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exam, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Exam_Id, new SelectList(ViewBag.EXAMLIST, "Exam_Id", "Exam_Name"), "--Select the Exam --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Exam_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slot_Paper_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Paper_Id, new SelectList(Enumerable.Empty<SelectList>(), "Paper_Id", "Subject_Name"), "--Select the Subject--", new { @class = "form-control d-grid gap-2 " })
+                @Html.ValidationMessageFor(model => model.Paper_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slot_Start_time, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Slot_Start_time, new { htmlAttributes = new { @class = "form-control" }, id = "timerId" })
+                @Html.ValidationMessageFor(model => model.Slot_Start_time, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slot_End_time, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Slot_End_time, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Slot_End_time, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slot_Day, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
+                {
+                    <label class="checkbox-inline">
+                        @Html.CheckBox("selectedDays", new { value = day }) @day
+                    </label>
+                }
+                @Html.ValidationMessageFor(model => model.Slot_Day, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 ">
+                <input id="Slot_Submit_Button" type="submit" value="Create" class="btn btn-info" />
+                @Html.ActionLink("Slot List", "GetSlotList", "Home", new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+}
+<br />
+<div>
+  
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<!--      Java script Alert Popup Message-->
+@if (!string.IsNullOrEmpty(ViewBag.AddSlot))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.AddSlot");
+        /*window.location.href = 'GetEmployeeList';*/
+    </script>
+}
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+       /* debugger;*/
+        $("#Exam_Id").change(function () {
+            //debugger;
+            var examId = $("#Exam_Id").val();
+            $.ajax({
+                url: '@Url.Action("BindPaper")',
+                ContentType: "application/json",
+                type: 'GET',
+                dataType: 'json',
+                data: { exam_id: examId },
+                success: function (ctry) {
+
+                    var ddlPaper = $('#Paper_Id');
+                    if (ctry == "") {
+                        alert(ctry)
+                    }
+                    ddlPaper.empty().append('<option selected="selected" value="0">Select Subject</option>');
+                    $.each(ctry, function (i, ctry) {
+                        ddlPaper.append($("<option></option>").val(this['Paper_Id']).html(this['Subject_Name']));
+                    });
+
+                }
+            });
+
+        });
+    });
+</script>
+
+

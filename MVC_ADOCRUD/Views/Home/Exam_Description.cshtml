@@ -1,0 +1,165 @@
+﻿@model MVC_ADOCRUD.Models.Property
+
+@{
+    ViewBag.Title = "Exam_Description";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .control-label {
+        color: white;
+    }
+
+    h2 {
+        color: gold;
+    }
+</style>
+
+<h2>Exam_Description</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exam_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Exam_Id, ViewBag.examdata as SelectList, "-- Select the Exam --", new { @class = "form-control d-grid gap-2 col-5 " })
+                @Html.ValidationMessageFor(model => model.Exam_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Paper_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Paper_Id, ViewBag.paperdata as SelectList,"--Select the Paper--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Paper_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description_Exam, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description_Exam, new { @id = "description-editor", @class = "form-control ckeditor", @rows = "10" })
+                @Html.ValidationMessageFor(model => model.Description_Exam, "", new { @class = "text-danger ckeditor" })
+            </div>
+        </div>
+
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+<br />
+
+<div>
+    @Html.ActionLink("Exam Description List", "Get_Exam_Description_List", "Home", new { @class = "col-2  btn btn-success" })
+</div>
+<br />
+<div>
+    @Html.ActionLink("Exam_Notification_List", "Get_Exam_Notification_List_For_View", "Home", new { @class = "col-2  btn btn-primary" })
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@*----------------------------------------------------*@
+
+
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+
+
+
+
+
+<script src="https://cdn.tiny.cloud/1/ll9mulir3dive4q9h0yvk994ke0lefczbvrndhxcwncedkop/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        height: 300,
+        width:500,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+</script>
+
+
+<script>
+    tinymce.init({
+        selector: '#description-editor',
+        // Other configuration options as needed
+    });
+</script>
+
+@*<script>
+    $(document).ready(function () {
+        CKEDITOR.replace("#Description");
+    });
+</script>*@
+
+
+
+<!--      Java script Alert Popup Message-->
+@if (!string.IsNullOrEmpty(ViewBag.ADDExam_Description))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.ADDExam_Description");
+        /*window.location.href = 'GetEmployeeList';*/
+    </script>
+}
+
+@*<script>
+        $(document).ready(function () {
+           /* debugger;*/
+            $("#Exam_Id").change(function () {
+                //debugger;
+                var examId = $("#Exam_Id").val();
+                $.ajax({
+                    url: '@Url.Action("BindExamPaper")',
+                    ContentType: "application/json",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { exampaper_id: examId },
+                    success: function (ctry) {
+
+                        var ddlPaper = $('#Paper_Id');
+                        if (ctry == "") {
+                            alert(ctry)
+                        }
+                        ddlPaper.empty().append('<option selected="selected" value="0">Select Subject</option>');
+                        $.each(ctry, function (i, ctry) {
+                            ddlPaper.append($("<option></option>").val(this['Paper_Id']).html(this['Subject_Name']));
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>*@

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MVC_ADOCRUD.Models.Property>
+
+@{
+    ViewBag.Title = "Get_Exam_Geoup_List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2, th {
+        color: gold;
+        text-align: center;
+    }
+
+    td {
+        color: wheat;
+        text-align: center;
+    }
+</style>
+
+<h2>Get_Exam_Group_List</h2>
+
+<p>
+    @Html.ActionLink("Add Exam Group", "Examination_Group", "Home", new { @class = "btn btn-outline-light" })
+</p>
+
+<table class="table bg-dark table-responsive-sm table-bordered" ]>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Examination_Group_Id)</th>
+        <th>@Html.DisplayNameFor(model => model.Exam_Id)</th>
+        <th>@Html.DisplayNameFor(model => model.Paper_Id)</th>
+        <th>@Html.DisplayNameFor(model => model.Exam_Group)</th>
+        <th>Options</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Examination_Group_Id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Exam_Id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Paper_Id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Exam_Group)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Examination_Group_Id }, new { @class = "btn btn-outline-light" })
+                @Html.ActionLink("Delete", "Exam_Group_Delete", new { id = item.Examination_Group_Id }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Do you want to delete this record');" })
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+

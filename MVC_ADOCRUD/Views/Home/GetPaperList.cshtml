@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MVC_ADOCRUD.Models.Property>
+
+@{
+    ViewBag.Title = "GetPaperList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2 {
+        color: gold;
+    }
+</style>
+<h2>GetPaperList</h2>
+
+<p>
+    @Html.ActionLink("Add New Paper", "Paper", "Home", new { @class = "d-grid gap-2 col-2 btn btn-success" })
+</p>
+<table class="table table-bordered table-active table-responsive table-striped   table-sm text-center table-dark text-white ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Paper_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Exam_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Minimum_Marks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maximum_Marks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Section)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paper_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exam_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Min_Marks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Max_Marks)
+            </td>
+            <td>
+                @Html.ActionLink("Section ", "Section", new { id = item.Paper_Id }, new { @class = "btn btn-outline-light" })
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "PaperUpdate", new { id = item.Paper_Id }, new { @class = "btn btn-outline-light" })
+                @Html.ActionLink("Delete", "PaperDelete", new { id = item.Paper_Id }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Do you want to delete this record');" })
+            </td>
+        </tr>
+    }
+
+</table>
